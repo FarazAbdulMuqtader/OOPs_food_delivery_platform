@@ -12,9 +12,11 @@ class UserCart:
     def calc_total(self):
         # loop selected items and return final cost
         total_cost=0
+        total_cost_gst=0
         for items in self.selected_items:
            total_cost+=items.cost
-        return total_cost
+           total_cost_gst=total_cost*117/100
+        return total_cost_gst
 
     def view_cart(self):
         print(self.username," cart")
