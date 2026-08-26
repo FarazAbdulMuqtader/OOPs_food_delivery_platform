@@ -28,13 +28,43 @@ print()
 item1 = m.MenuItem(101, "Burger", 550)
 item2 = m.MenuItem(102, "Pizza", 1200)
 item3 = m.MenuItem(103, "Fries", 250)
-item4=m.MenuItem(104,"Drink",125)
+item4 = m.MenuItem(104,"Drink",125)
 
-# Add items to the restaurant menu dictionary
 my_restaurant.add_item(item1)
 my_restaurant.add_item(item2)
 my_restaurant.add_item(item3)
 my_restaurant.add_item(item4)
+
+username = input("Enter your name: ")
+user_cart = c.UserCart(username)
+
+print("\n--- MENU ---")
+print("Choose Burger-550 using id 101")
+print("Choose Pizza-1200 using id 102")
+print("Choose Fries-250 using id 103")
+print("Choose Drink-125 using id 105")
+print("Enter any other key to stop ordering.")
+
+while True:
+    user_input = input("What to add in your cart using id: ")
+
+    if user_input.isdigit():
+        ch = int(user_input)  # Convert str into int
+    else:
+        print("Thank you for choosing it..")
+        break
+
+    selected_item = my_restaurant.get_item(ch)
+
+    if selected_item:
+        user_cart.add_to_cart(selected_item)
+    else:
+        print("Invalid ID! Please try again.")
+
+user_cart.view_cart()
+total = user_cart.calc_total()
+print(f"Total Amount to Pay after 17% Tax : Rs. {total}")
+print("THANK YOU FOR CHOOSING US:)")my_restaurant.add_item(item4)
 
 # 2. Setup User Cart
 username = input("Enter your name: ")
