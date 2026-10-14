@@ -5,6 +5,8 @@ from tkinter import ttk, messagebox
 from menu import FoodItem, DrinkItem
 from restaurant import Restaurant
 from cart import UserCart
+from data import build_menu
+from orderlog import OrderLog
 
 RESTAURANTS = ["Coconut Groove", "Ala Rahi", "Xanders", "Meat the Cheese",
                "The Burger Lab", "The Pizza Lab", "Aristo", "Perch"]
@@ -113,17 +115,9 @@ class FoodApp(tk.Tk):
         if not name:
             messagebox.showwarning("Missing name", "Please enter your name first.")
             return
-        self.menu_items = [
-            FoodItem(101, "Burger", 550),
-            FoodItem(102, "Pizza", 1200),
-            FoodItem(103, "Fries", 250),
-            FoodItem(104, "Pasta", 800),
-            FoodItem(105, "Salad", 400),
-            FoodItem(106, "Ice Cream", 300),
-            DrinkItem(107, "Soda", 120, {"Small": 120, "Medium": 150, "Large": 180}),
-            DrinkItem(108, "Mocktails", 350, {"Small": 350, "Medium": 430, "Large": 500}),
-        ]
-        self.restaurant = Restaurant(self.combo.get())
+        restaurant_name = self.combo.get()
+        self.menu_items = build_menu(restaurant_name)         # each restaurant has its own menu
+        self.restaurant = Restaurant(restaurant_name)
         self.restaurant.add_item(*self.menu_items)
         self.cart = UserCart(name)
         self.cart_items = []
@@ -187,9 +181,11 @@ class FoodApp(tk.Tk):
         if self.cart is None or len(self.cart) == 0:
             messagebox.showinfo("Empty cart", "Add something first.")
             return
+        order_id = OrderLog().save(self.restaurant.name, self.cart)   # record in orders.csv
         receipt = self.cart.make_receipt()    # deep copy, then clear the cart
         lines = [describe(item) for item in self.cart_items]
-        text = "\n".join(lines) + f"\n\nTotal: Rs. {receipt.calc_total():.2f}"
+        text = (f"Order #{order_id} - {self.restaurant.name}\n\n" + "\n".join(lines)
+                + f"\n\nTotal: Rs. {receipt.calc_total():.2f}")
         self.cart.clear()
         self.cart_items = []
         self.refresh_cart()
