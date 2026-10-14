@@ -6,6 +6,10 @@ class UserCart:
         self.username = username
         self.__selected_items = []            # private; AGGREGATION:items exist in the menu too
 
+    @property                                  #read-only property; getter method
+    def items(self):
+        return list(self.__selected_items)
+
     def add_to_cart(self, item):
         self.__selected_items.append(item)
         print("Added", item.name, "to the cart")
