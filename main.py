@@ -1,8 +1,10 @@
-from menu import FoodItem,DrinkItem
+from menu import FoodItem, DrinkItem
 from restaurant import Restaurant
 from cart import UserCart
+from data import build_menu
+from orderlog import OrderLog
 
-RESTAURANTS = {1: "Coconut Groove",2: "Ala Rahi",3: "Xanders",4: "Meat the Cheese",5: "The Burger Lab",6: "The Pizza Lab",7: "Aristo",8: "Perch"}
+RESTAURANTS = {1: "Coconut Groove", 2: "Ala Rahi", 3: "Xanders", 4: "Meat the Cheese", 5: "The Burger Lab", 6: "The Pizza Lab", 7: "Aristo", 8: "Perch"}
 
 print("Restaurants available:")
 for number, name in RESTAURANTS.items():
@@ -19,16 +21,7 @@ my_restaurant = Restaurant(restaurant_name)
 print("Welcome to", restaurant_name)
 print("=============================")
 
-my_restaurant.add_item(
-    FoodItem(101, "Burger", 550),
-    FoodItem(102, "Pizza", 1200),
-    FoodItem(103, "Fries", 250),
-    FoodItem(104,"Pasta", 800),
-    FoodItem(105, "Salad", 400),
-    FoodItem(106,"Ice Cream", 300),
-    DrinkItem(107, "Soda", 120, {"Small": 120, "Medium": 150, "Large": 180}),
-    DrinkItem(108, "Mocktails", 350, {"Small": 350, "Medium": 430, "Large": 500}),
-)
+my_restaurant.add_item(*build_menu(restaurant_name))   # each restaurant gets its own menu
 
 username = input("Enter your name: ")
 user_cart = UserCart(username)
@@ -60,6 +53,10 @@ while True:
 print(f"\nItems in cart: {len(user_cart)}")
 user_cart.view_cart()
 print(f"\nTotal Amount to Pay: Rs. {user_cart.calc_total()}")
+
+if len(user_cart) > 0:                        # record the order in orders.csv
+    order_id = OrderLog().save(restaurant_name, user_cart)
+    print(f"Order #{order_id} saved to orders.csv")
 
 receipt = user_cart.make_receipt()            # copy first, then empty the cart
 user_cart.clear()
