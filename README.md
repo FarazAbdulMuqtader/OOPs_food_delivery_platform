@@ -23,15 +23,15 @@ The project simulates a full ordering session end to end: restaurant selection (
 
 Each box lists attributes and methods. The red notes mark the OOP concept used in that class.
 
-![UML class diagram, page 1: menu.py, restaurant.py, cart.py](docs/uml-class-diagram-1.png)
+![UML class diagram, page 1: menu.py, restaurant.py, cart.py](uml-class-diagram-1.png)
 
-![UML class diagram, page 2: data.py, orderlog.py, main.py, gui.py](docs/uml-class-diagram-2.png)
+![UML class diagram, page 2: data.py, orderlog.py, main.py, gui.py](uml-class-diagram-2.png)
 
 ## File Relationships
 
 How the files link to each other, and which kind of relationship each link is.
 
-![File relationships](docs/file-relationships.png)
+![File relationships](file-relationships.png)
 
 | Link                         | Type        | Why                                                              |
 | ---------------------------- | ----------- | ---------------------------------------------------------------- |
