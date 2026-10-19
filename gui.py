@@ -9,7 +9,7 @@ from data import build_menu
 from orderlog import OrderLog
 
 RESTAURANTS = ["Coconut Groove", "Ala Rahi", "Xanders", "Meat the Cheese",
-               "The Burger Lab", "The Pizza Lab", "Aristo", "Perch"]
+               "The Burger Lab", "Pizza Max", "Aristo", "Perch"]
 
 # ---- theme: orange + black
 BLACK = "#0D0D0D"
