@@ -49,3 +49,32 @@ class OrderLog:
                     "order_total": total,
                 })
         return order_id
+
+    def load_all(self):
+        """Read the CSV back and group the rows into orders (oldest first)."""
+        if not os.path.exists(self.path):
+            return []
+        orders = {}                           # order_id -> order dict
+        with open(self.path, newline="", encoding="utf-8") as f:
+            for row in csv.DictReader(f):
+                order_id = int(row["order_id"])          # CSV gives strings, convert
+                if order_id not in orders:               # first row of this order
+                    orders[order_id] = {
+                        "order_id": order_id,
+                        "timestamp": row["timestamp"],
+                        "customer": row["customer"],
+                        "restaurant": row["restaurant"],
+                        "total": float(row["order_total"]),
+                        "items": [],
+                    }
+                orders[order_id]["items"].append({
+                    "name": row["item_name"],
+                    "size": row["size"],
+                    "price": float(row["price"]),
+                })
+        return list(orders.values())
+
+    def orders_for(self, username):
+        """Only the orders placed by this customer (case-insensitive)."""
+        return [o for o in self.load_all()
+                if o["customer"].lower() == username.strip().lower()]
