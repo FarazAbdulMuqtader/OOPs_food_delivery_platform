@@ -1,9 +1,9 @@
 import random
-from menu import Menu
+from menu import Menu # from menu file import Menu class  
 
 class Restaurant:
     def __init__(self, name, restaurant_id=None):
-        self._restaurant_id = restaurant_id or random.randint(1000, 2000)  # protected
+        self._restaurant_id = restaurant_id or random.randint(1000, 5000)  # protected
         self.name = name
         self.menu = Menu()                    # COMPOSITION: restaurant creates and owns its menu
 
