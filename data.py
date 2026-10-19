@@ -48,7 +48,7 @@ MENUS = {
         ("drink", 107, "Soda", 120, {"Small": 120, "Medium": 150, "Large": 180}),
         ("drink", 108, "Mocktails", 350, {"Small": 350, "Medium": 430, "Large": 500}),
     ],
-    "The Pizza Lab": [
+    "Pizza Max": [
         ("food", 101, "Margherita Pizza", 1100),
         ("food", 102, "Pepperoni Pizza", 1400),
         ("food", 103, "Fajita Pizza", 1500),
@@ -79,7 +79,6 @@ MENUS = {
 
 
 def build_menu(restaurant_name):
-    """Turn the data rows for one restaurant into FoodItem / DrinkItem objects."""
     items = []
     for row in MENUS[restaurant_name]:
         if row[0] == "food":
