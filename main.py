@@ -5,7 +5,7 @@ from data import build_menu
 from orderlog import OrderLog
 
 # Stored in dict format
-RESTAURANTS = {1: "Coconut Groove", 2: "Ala Rahi", 3: "Xanders", 4: "Meat the Cheese", 5: "The Burger Lab", 6: "The Pizza Lab", 7: "Aristo", 8: "Perch"}
+RESTAURANTS = {1: "Coconut Groove", 2: "Ala Rahi", 3: "Xanders", 4: "Meat the Cheese", 5: "The Burger Lab", 6: "Pizza Max", 7: "Aristo", 8: "Perch"}
 
 print("Restaurants available:")
 # Options for restaurant 
