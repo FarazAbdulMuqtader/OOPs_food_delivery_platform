@@ -78,6 +78,7 @@ class FoodApp(tk.Tk):
                  insertbackground=ORANGE, bd=0, highlightthickness=1,
                  highlightbackground=ORANGE, highlightcolor=ORANGE_HOVER).pack(side="left", padx=5)
         make_button(top, "Open", self.open_restaurant).pack(side="left", padx=8)
+        make_button(top, "History", self.show_history).pack(side="left", padx=(0, 8))
 
         # --- middle: menu (left) and cart (right)
         mid = tk.Frame(self, bg=BLACK)
@@ -198,6 +199,35 @@ class FoodApp(tk.Tk):
         tk.Label(win, text=f"Receipt for {username}", bg=BLACK, fg=ORANGE,
                  font=("Helvetica", 14, "bold")).pack(pady=(0, 10))
         tk.Label(win, text=text, bg=BLACK, fg=TEXT, font=FONT, justify="left").pack()
+        make_button(win, "Close", win.destroy).pack(pady=(14, 0))
+
+    def show_history(self):
+        name = self.name_var.get().strip()
+        if not name:
+            messagebox.showwarning("Missing name", "Enter your name to see your orders.")
+            return
+        orders = OrderLog().orders_for(name)
+        if not orders:
+            messagebox.showinfo("No orders", f"No orders found for {name}.")
+            return
+
+        win = tk.Toplevel(self)
+        win.title("Order history")
+        win.configure(bg=BLACK, padx=24, pady=18)
+        tk.Label(win, text=f"Order history of {name}", bg=BLACK, fg=ORANGE,
+                 font=("Helvetica", 14, "bold")).pack(pady=(0, 10))
+
+        box = tk.Text(win, width=48, height=18, bg=DARK, fg=TEXT, font=FONT,
+                      bd=0, highlightthickness=0, wrap="word")
+        box.pack()
+        for order in reversed(orders):        # newest first
+            box.insert(tk.END, f"Order #{order['order_id']} - {order['restaurant']}\n")
+            box.insert(tk.END, f"{order['timestamp']}\n")
+            for item in order["items"]:
+                size = f" ({item['size']})" if item["size"] else ""
+                box.insert(tk.END, f"   {item['name']}{size} - Rs. {item['price']:.0f}\n")
+            box.insert(tk.END, f"   Total: Rs. {order['total']:.2f}\n\n")
+        box.config(state="disabled")          # read-only
         make_button(win, "Close", win.destroy).pack(pady=(14, 0))
 
 
