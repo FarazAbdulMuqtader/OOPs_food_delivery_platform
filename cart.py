@@ -6,10 +6,11 @@ class UserCart:
         self.username = username
         self.__selected_items = []            # private; AGGREGATION:items exist in the menu too
 
-    @property                                  #read-only property; getter method
+    @property                                  # Decorator:read-only property; getter method
     def items(self):
         return list(self.__selected_items)
-
+    
+    # Add items in the list 
     def add_to_cart(self, item):
         self.__selected_items.append(item)
         print("Added", item.name, "to the cart")
@@ -18,15 +19,17 @@ class UserCart:
         self.add_to_cart(item)
         return self
 
+    # Length of selected items
     def __len__(self):                        # len(cart)
         return len(self.__selected_items)
 
     def calc_total(self):
         subtotal = sum(self.__selected_items)  # uses MenuItem.__radd__
-        return subtotal * (100 + self.GST_RATE) / 100
+        return subtotal * (100 + self.GST_RATE) / 100 # Formula for 17% GST
 
     def view_cart(self):
         print(f"{self.username}'s cart")
+        # For the name given or not
         if not self.__selected_items:
             print("Cart is empty")
             return
