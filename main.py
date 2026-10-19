@@ -4,12 +4,15 @@ from cart import UserCart
 from data import build_menu
 from orderlog import OrderLog
 
+# Stored in dict format
 RESTAURANTS = {1: "Coconut Groove", 2: "Ala Rahi", 3: "Xanders", 4: "Meat the Cheese", 5: "The Burger Lab", 6: "The Pizza Lab", 7: "Aristo", 8: "Perch"}
 
 print("Restaurants available:")
+# Options for restaurant 
 for number, name in RESTAURANTS.items():
     print(f"Option {number} is {name}")
 
+# Loop to select one andkeep on going until non_numeric key
 while True:
     choice = input("Which restaurant would you like to pick? ")
     if choice.isdigit() and int(choice) in RESTAURANTS:
@@ -20,7 +23,7 @@ while True:
 my_restaurant = Restaurant(restaurant_name)
 print("Welcome to", restaurant_name)
 print("=============================")
-
+# * -> sends three separate items
 my_restaurant.add_item(*build_menu(restaurant_name))   # each restaurant gets its own menu
 
 username = input("Enter your name: ")
@@ -33,6 +36,8 @@ print("Enter any non-numeric key to stop ordering.")
 def ask_size(item):
     while True:
         choice = input(f"Choose size for {item.name} ({'/'.join(item.sizes)}): ").strip().title()
+        '''.strip() removes spaces from both ends of the text. Spaces in the middle stay
+        .title() makes the first letter of every word a capital and the rest small.'''
         if choice in item.sizes:
             return item.with_size(choice)
         print("Invalid size, try again.")
@@ -52,7 +57,7 @@ while True:
 
 print(f"\nItems in cart: {len(user_cart)}")
 user_cart.view_cart()
-print(f"\nTotal Amount to Pay: Rs. {user_cart.calc_total()}")
+print(f"\nTotal Amount to Pay including 17% GST: Rs. {user_cart.calc_total()}")
 
 if len(user_cart) > 0:                        # record the order in orders.csv
     order_id = OrderLog().save(restaurant_name, user_cart)
