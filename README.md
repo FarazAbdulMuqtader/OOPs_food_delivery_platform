@@ -1,3 +1,4 @@
+<img width="972" height="545" alt="Screen Shot 2026-11-02 at 10 16 01 AM" src="https://github.com/user-attachments/assets/a48fb929-7d22-433f-90e5-7e3c39d5fc9c" />
 # OOPs Food Delivery Platform
 
 A food ordering system in Python, built to apply core object-oriented programming principles over a real-world workflow: pick a restaurant, browse its menu, build a cart, check out, and keep a history of past orders. It runs as a console app (`main.py`) or as a themed Tkinter GUI (`gui.py`).
